@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <p>1~100까지의 랜덤한 숫자 하나를 맞춰보세요!</p>
+    <button id="startBtn">게임 시작</button>
+    <div id="btnArea"></div>
+    <p id="result">고른 숫자 : </p>
+    <div id="choice"></div>
+    <button id="reset">재시작</button>
+    <p id="cnt">남은 횟수 :</p>
+
+   
+   
+   
+   <script>
+        
+        function getRandInt(min, max) {
+            return min + Math.floor(Math.random() * (max - min + 1));
+        }
+            let min = 1;
+            let max = 100;
+            let btnArea = document.getElementById('btnArea');
+            let result = document.getElementById('result');
+            let startBtn = document.getElementById('startBtn');
+            let choice = document.getElementById('choice');
+            let count = 5;
+            let num = getRandInt(min,max);
+   
+            cnt.innerText ="남은 횟수 : "+ count;
+            document.getElementById('startBtn').addEventListener('click',function(){
+                for(let i=min; i <= max; i++){
+                    
+                    let Btn = document.createElement('button');
+                    Btn.innerText=i;
+                    Btn.onclick = function(e){
+                    count--;
+                    cnt.innerText ="남은 횟수 : "+ count;
+                    result.innerText="고른 숫자 : " + Number(e.target.innerText);
+                    console.log(result);
+                    var choiceNum= Number(e.target.innerText);
+                        console.log(num);
+                        console.log(choiceNum);
+                    if(num < choiceNum){
+                        result.innerText = "선택한 "+choiceNum+"은 랜덤한 숫자보다 큽니다!";
+                        max = choiceNum -1;
+
+                    }else if(num > choiceNum){
+                        result.innerText = "선택한 "+choiceNum+"은 랜덤한 숫자보다 작습니다!";
+                        min = choiceNum +1;
+                    }else{
+                        result.innerText = "축하합니다! 선택한 "+choiceNum+"은 랜덤한 숫자가 맞습니다! 다시 시도해보세요!";
+                        min = 1;
+                        max = 100;
+                        num = getRandInt(min,max);
+                        count = 5;
+                        cnt.innerText = "남은 횟수 : "+count;
+                    }   
+                    if(count == 0) {
+                        num = getRandInt(min,max);
+                        count = 5;
+                        cnt.innerText = "남은 횟수 : "+count;
+                        result.innerText = "남은 횟수를 모두 소진하셨습니다. 다시 시도해 보세요";
+                        
+                    }
+                    }
+
+                    btnArea.appendChild(Btn);
+                    
+                        
+                }
+                startBtn.style.display = 'none';
+                
+                reset.addEventListener('click',function(){
+                    min = 1;
+                    max = 100;
+                    num = getRandInt(min,max);
+                    count = 5;
+                    result.innerText = "게임을 재시작 합니다";
+                    cnt.innerText = "남은 횟수 : "+count;
+                })
+            
+            })
+        
+
+
+    </script>
+</body>
+
+</html>

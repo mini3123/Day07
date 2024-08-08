@@ -11,68 +11,73 @@
 
     <p>1~100까지의 랜덤한 숫자 하나를 맞춰보세요!</p>
     <button id="startBtn">게임 시작</button>
-    <div id="btnArea"><div>
+    <div id="btnArea"></div>
     <p id="result">고른 숫자 : </p>
     <div id="choice"></div>
     <button id="reset">재시작</button>
-    <p id = "cntBtn">남은 횟수 : </p>
-    <div id = "cnt"></div>
+    <p id="cntBtn">남은 횟수 : </p>
+    <div id="cnt"></div>
 
     <script>
         function getRandInt(min, max) {
-            return min + Math.floor( Math.random() * (max-min+1) );
+            return min + Math.floor(Math.random() * (max - min + 1));
         }
 
         var min = 1;
         var max = 100;
         var cnt = 5;
-        var num = getRandInt(min,max);
+        var num = getRandInt(min, max);
         var btnArea = document.getElementById('btnArea');
         var result = document.getElementById('result');
-        var cnt = document.getElementById('cnt');
+        var cntDisplay = document.getElementById('cnt');
         var cntBtn = document.getElementById('cntBtn');
         var reset = document.getElementById('reset');
 
-        
-        function draw(){ 
-            document.getElementById('starBtn').addEventListener('click',function(){
+        function draw() {
+            document.getElementById('startBtn').addEventListener('click', function() {
+                btnArea.innerHTML = "";
+                for (var i = min; i <= max; i++) {
+                    var Btn = document.createElement("button");
+                    Btn.innerText = i;
+                    Btn.addEventListener('click', function(e) {
+                        cnt--;
+                        var choiceNum = Number(e.target.innerText);
+                        console.log(choiceNum);
+
+                        if (num < choiceNum) {
+                            result.innerText = "고른 숫자 : " + choiceNum + " 보다 작습니다";
+                        } else if (num > choiceNum) {
+                            result.innerText = "고른 숫자 : " + choiceNum + " 보다 큽니다";
+                        } else {
+                            result.innerText = "축하합니다! 정답은 " + choiceNum + " 이였습니다";
+
+                        }
+                        cntBtn.innerText = "남은 횟수 : " + cnt;
+                        if(num !== choiceNum && cnt <= 0 ) {
+                            min = 1;
+                            max = 100;
+                            num = getRandInt(min, max);
+                            cnt = 6;
+                            console.log("게임 다시 실행! num =>", num);
+                            cntBtn.innerText = "결과: 게임을 다시 실행 합니다!";
+                    }
+                    });
+                    btnArea.appendChild(Btn);
+                }
+            });
+        }
+
+        reset.addEventListener('click', function() {
+            min = 1;
+            cnt = 5;
+            max = 100;
+            num = getRandInt(min, max);
+            result.innerText = "게임을 재시작합니다.";
+            cntBtn.innerText = "남은 횟수 : " + cnt;
             btnArea.innerHTML = "";
-            for(var i=min; i<=max; i++){
-            var Btn = document.createElement("button");
-            Btn.innerText = i;
-            btnArea.appendChild(Btn);
+        });
 
-            reset.click = function(e){
-                min = 1;
-                cnt = 5;
-                max = 100;
-                num = getRandInt(min,max);
-                result.innerText = "게임을 재시작합니다.";
-
-            }
-
-            Btn.click = function(e){
-                cnt--;
-                var choiceNum = Number(e.target.innerText);
-                console.log(choiceNum);
-
-                if(num < choiceNum) {
-                    result.innerText = "고른 숫자 : "+choiceNum+" 보다 작습니다";
-                    cntBtn.innerText = "남은 횟수 : "+cnt;
-                    min = choiceNum + 1;
-                }    
-              }
-            }      
-        }      
-    )}
-        
-
-        
-
-
-    
-
-
+        draw();
     </script>
 </body>
 

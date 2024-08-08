@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <script>
+        //옛날 방식의 클래스 선언(function 생성자 만들기)
+        function People() {
+            this.name = "홍길동";
+            this.age = 35;
+
+            function showInfo(){
+                // 내부에 선언 하면 모든 객체에 소스가 복제된다.
+                // 내부에 메서드를 선언 하는 것은 비추
+                // prototype에 메서드 선언하는 것을 추천
+            }
+        }
+        People.prototype.display = function(){
+        
+            console.log(this.name,this.age);
+
+        }
+
+        People.prototype.method2 = function(){
+            this.display()
+        }
+
+        const p1 = new People();
+        p1.display()
+
+        //ES6 에서 클래스 선언
+        class 클래스명{
+            constructor(){
+                this.속성1 = "값";
+                this.속성2 = "값";
+            }
+        }
+
+
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>파칭코 게임 예제</title>
+    <style>
+        .container {
+            text-align: center;
+            margin-top: 50px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-gap: 10px;
+            margin-bottom: 20px;
+        }
+        .cell {
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #8200fc;
+            background-color: #4dff0058;
+            
+        }
+        .lever {
+            display: inline-block;
+            width: 100px;
+            height: 30px;
+            background-color: #4CAF50;
+            color: #fff;
+            line-height: 30px;
+            text-align: center;
+            cursor: pointer;
+            user-select: none;
+        }
+        .lever.active {
+            background-color: #FF5722;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="grid" id="grid">
+            <div class="cell">1</div>
+            <div class="cell">2</div>
+            <div class="cell">3</div>
+            <div class="cell">4</div>
+            <div class="cell">5</div>
+            <div class="cell">6</div>
+            <div class="cell">7</div>
+            <div class="cell">8</div>
+            <div class="cell">9</div>
+        </div>
+        <div class="lever" id="lever">레버 당기기</div>
+    </div>
+
+    <script>
+        const lever = document.getElementById('lever');
+        const cells = document.querySelectorAll('.cell');
+        let isSpinning = false;
+        let interval;
+
+        lever.addEventListener('mousedown', () => {
+            if (!isSpinning) {
+                isSpinning = true;
+                lever.classList.add('active');
+                lever.textContent = '레버 놓기';
+                startSpinning();
+            }
+        });
+
+        lever.addEventListener('mouseup', () => {
+            if (isSpinning) {
+                isSpinning = false;
+                lever.classList.remove('active');
+                lever.textContent = '레버 당기기';
+                stopSpinning();
+            }
+        });
+
+        function startSpinning() {
+            interval = setInterval(() => {
+                cells.forEach(cell => {
+                    cell.textContent = Math.floor(Math.random() * 9) + 1;
+                });
+            }, 50);
+        }
+
+        function stopSpinning() {
+            clearInterval(interval);
+        }
+    </script>
+</body>
+</html>
